@@ -25,17 +25,24 @@ export class QuestionerService {
     createQuestionerDto: CreateQuestionerDto,
   ): Promise<Questioner> {
     const { ...questionerData } = createQuestionerDto;
-
-    const user = await this.userRepository.findOne({ where: { id: userId } });
+  
+    // Fetch the user from the database by userId
+    const user = await this.userRepository.findOne({ where: { id: userId }, relations: ['questioner'] });
     if (!user) {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
-
+  
+    // Check if the user already has a Questioner
+    if (user.questioner) {
+      throw new Error(`User with ID ${userId} already has a Questioner.`);
+    }
+  
+    // Create a new questioner
     const questioner = this.questionerRepository.create({
       ...questionerData,
-      user, // Associate the user
+      user, // Associate the user with the questioner
     });
-
+  
     try {
       return await this.questionerRepository.save(questioner);
     } catch (error) {
@@ -45,7 +52,7 @@ export class QuestionerService {
       );
     }
   }
-
+  
   async findAll(): Promise<Questioner[]> {
     return this.questionerRepository.find();
   }

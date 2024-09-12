@@ -56,8 +56,15 @@ export class User extends BaseEntity {
   @OneToOne(() => Questioner, (questioner) => questioner.user)
   questioner: Questioner;
 
+
   @OneToOne(() => AccessToken, (accessToken) => accessToken.user, {
     cascade: true,
   })
   accessToken: AccessToken;
+
+  @Column({ nullable: true })
+  otp: string; // Stores the OTP code
+
+  @Column({ nullable: true })
+  otpExpiresAt: Date;
 }

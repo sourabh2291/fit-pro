@@ -67,3 +67,29 @@ export class SignInWithOAuthDto {
   @IsEnum(AuthProvider)
   authProvider: AuthProvider;
 }
+
+
+export class VerifyOtpDto {
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty()
+  otp: string;
+}
+
+
+export class ForgotPasswordDto {
+  @ApiProperty()
+  email: string;
+}
+
+export class ResetPasswordDto {
+  @ApiProperty()
+  email: string;
+  @ApiProperty()
+  otp: string;
+  @ApiProperty()
+  newPassword: string;
+}
+
+

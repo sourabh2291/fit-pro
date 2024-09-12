@@ -15,6 +15,7 @@ import {
   ApiResponse,
   ApiBody,
   ApiParam,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { QuestionerService } from '../services/questioner.service';
 import { Questioner } from 'src/typeorm/entities';
@@ -31,6 +32,7 @@ export class QuestionerController {
   constructor(private readonly questionerService: QuestionerService) {}
 
   @Post(':userId')
+  @ApiBearerAuth()
   async create(
     @Body() createQuestionerDto: CreateQuestionerDto,
     @Param('userId') userId: number,

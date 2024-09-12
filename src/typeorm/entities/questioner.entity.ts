@@ -4,6 +4,7 @@ import {
   Column,
   BaseEntity,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { User } from './user.entities';
 
@@ -108,5 +109,7 @@ export class Questioner extends BaseEntity {
   workoutPreferredTime: WorkoutPreferredTime;
 
   @OneToOne(() => User, (user) => user.questioner)
+  @JoinColumn() 
   user: User;
+  
 }

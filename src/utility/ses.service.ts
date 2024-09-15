@@ -8,7 +8,7 @@ export class OtpService {
 
   constructor() {
     this.ses = new SES({
-      region: 'us-east-1', // Replace with your AWS region
+      region: 'ap-south-1', // Replace with your AWS region
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
@@ -16,7 +16,7 @@ export class OtpService {
 
   async sendOtpEmail(to: string, otp: string): Promise<void> {
     const params: SES.Types.SendEmailRequest = {
-      Source: 'your-verified-email@example.com', // Replace with your verified email
+      Source: 'admin@elitebodyx.in', // Replace with your verified email
       Destination: {
         ToAddresses: [to],
       },

@@ -1,9 +1,9 @@
-import { Controller, Post, Body, Logger } from '@nestjs/common';
+import { Controller, Post, Body, Logger, Param } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthService } from '../services/auth.service';
 import { EmailSignupDto } from '../dto/singup.dto';
 import { User } from 'src/typeorm/entities';
-import { OAuthSignupDto, SignInDto, SignInWithOAuthDto } from '../dto/auth.dto';
+import { ForgotPasswordDto, OAuthSignupDto, ResetPasswordDto, SignInDto, SignInWithOAuthDto, VerifyOtpDto } from '../dto/auth.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -38,4 +38,36 @@ export class AuthController {
   ): Promise<{ accessToken: string }> {
     return this.authService.signInWithOauth(dto);
   }
+
+
+  @Post('verify-otp')
+  async verifyOtp(@Body() dto: VerifyOtpDto) {
+    const token = await this.authService.verifyOtp(dto);
+    return token;
+  }
+
+  @Post('forgot-password')
+  async requestPasswordReset(@Body() dto: ForgotPasswordDto) {
+    await this.authService.requestPasswordReset(dto);
+    return { message: 'OTP sent for password reset' };
+  }
+
+  @Post('reset-password')
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    await this.authService.resetPassword(dto);
+    return { message: 'Password successfully reset' };
+  }
+
+
+  @Post('send-otp/:email')
+  async sendOtp(@Param('email') email: string) {
+    await this.authService.sendOtp  (email);
+    return { message: 'Password successfully reset' };
+  }
+
+
+  
+
+
+
 }

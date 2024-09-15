@@ -7,6 +7,7 @@ import { TypeOrmService } from './typeorm/typeorm.service';
 // import { UserModule } from './module/user/user.module';
 import { AuthModule } from './module/auth/auth.module';
 import { QuestionerModule } from './module/Questioner/questioner.module';
+import { UploadModule } from './module/upload/upload.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { QuestionerModule } from './module/Questioner/questioner.module';
     // UserModule,
     AuthModule,
     QuestionerModule,
+    UploadModule
   ],
   controllers: [AppController],
   providers: [AppService],
